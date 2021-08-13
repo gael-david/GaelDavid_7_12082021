@@ -2,7 +2,7 @@ import { useState } from "react";
 
 type Props = {
   title: string;
-  onSubmit: (email: string, password: string) => Promise<string>;
+  onSubmit: (email: string, password: string) => Promise<{ id: string; token: string }>;
 };
 
 export default function AuthForm({ title, onSubmit }: Props) {
@@ -21,11 +21,10 @@ export default function AuthForm({ title, onSubmit }: Props) {
   async function handleSubmit() {
     if (email === "" || password === "") return;
     try {
-      const res = await onSubmit(email, password);
-      //   console.log(res.error);
-      //   setError(res.error);
+      const data = await onSubmit(email, password);
+      localStorage.setItem("token", data.token);
     } catch (error: any) {
-      console.log(error);
+      setError(error?.response?.data?.message);
     }
   }
 
@@ -35,7 +34,7 @@ export default function AuthForm({ title, onSubmit }: Props) {
       <input type="email" name="email" id="email" onChange={handleEmail} />
       <input type="password" name="password" id="password" onChange={handlePassword} />
       <button onClick={handleSubmit} disabled={!(email !== "" && password !== "")}>
-        Register
+        {title}
       </button>
       {error && <div>{error}</div>}
     </div>
