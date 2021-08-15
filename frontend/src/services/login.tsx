@@ -6,5 +6,5 @@ export async function loginService(email: string, password: string) {
     password,
   });
 
-  return res.data;
+  localStorage.setItem("token", res.data.token);
 }

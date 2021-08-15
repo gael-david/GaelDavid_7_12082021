@@ -2,7 +2,7 @@ import { useState } from "react";
 
 type Props = {
   title: string;
-  onSubmit: (email: string, password: string) => Promise<{ id: string; token: string }>;
+  onSubmit: (email: string, password: string) => Promise<void>;
 };
 
 export default function AuthForm({ title, onSubmit }: Props) {
@@ -21,8 +21,7 @@ export default function AuthForm({ title, onSubmit }: Props) {
   async function handleSubmit() {
     if (email === "" || password === "") return;
     try {
-      const data = await onSubmit(email, password);
-      localStorage.setItem("token", data.token);
+      await onSubmit(email, password);
     } catch (error: any) {
       setError(error?.response?.data?.message);
     }

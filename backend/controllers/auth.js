@@ -1,11 +1,13 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 exports.registerUser = async (req, res) => {
   try {
+    const hash = await bcrypt.hash(req.body.password, 10);
     const user = await User.create({
       email: req.body.email,
-      password: req.body.password,
+      password: hash,
     });
 
     res.status(201).json({ message: `New user registered` });
@@ -19,11 +21,11 @@ exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email: email } });
 
-    console.log(user);
-
     if (!user) return res.status(401).json({ message: "User not found." });
 
-    if (user.password !== password) return res.status(401).json({ message: "Incorrect password" });
+    const valid = await bcrypt.compare(password, user.password);
+
+    if (!valid) return res.status(401).json({ message: "Incorrect password" });
 
     res.status(200).json({
       id: user.id,

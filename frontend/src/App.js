@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
+import { Reset } from "styled-reset";
 import Register from "./pages/register/Register";
 import Login from "./pages/login/Login";
 import LandingPage from "./pages/landing/LandingPage";
 import Feed from "./pages/feed/Feed";
 import Header from "./common/Header";
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    font-family: Verdana;
+    background: #06061d;
+    color: white;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+`;
 
 export const IsLoggedContext = React.createContext();
 
@@ -20,6 +35,8 @@ function App() {
 
   return (
     <>
+      <Reset />
+      <GlobalStyle />
       <IsLoggedContext.Provider value={{ isLogged, setIsLogged }}>
         <Router>
           <div>

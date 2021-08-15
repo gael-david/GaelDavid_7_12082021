@@ -8,9 +8,8 @@ export default function Login() {
   const { isLogged, setIsLogged } = useContext(IsLoggedContext);
 
   async function loginUser(email: string, password: string) {
-    const res = await loginService(email, password);
+    await loginService(email, password);
     setIsLogged(true);
-    return res.data;
   }
 
   if (isLogged) return <Redirect to="/feed" />;

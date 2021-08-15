@@ -8,9 +8,7 @@ export async function registerService(email: string, password: string) {
       password,
     });
 
-    const res = await loginService(email, password);
-
-    return res.data;
+    await loginService(email, password);
   } catch (error) {
     return error;
   }

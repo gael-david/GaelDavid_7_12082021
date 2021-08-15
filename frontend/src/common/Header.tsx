@@ -1,6 +1,14 @@
 import { useContext } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { IsLoggedContext } from "../App";
+
+const StyledNav = styled.nav`
+  display: flex;
+  height: 80px;
+  align-items: center;
+  gap: 1rem;
+`;
 
 export default function Header() {
   const { isLogged, setIsLogged } = useContext(IsLoggedContext);
@@ -11,19 +19,19 @@ export default function Header() {
   }
 
   return (
-    <nav>
+    <StyledNav>
       {isLogged ? (
         <>
-          <Link to="/feed">Feed</Link>
+          <Link to="/feed">Groupomania</Link>
           <button onClick={logOut}>Logout</button>
         </>
       ) : (
         <>
-          <Link to="/">Home</Link>
+          <Link to="/">Groupomania</Link>
           <Link to="/register">Register</Link>
           <Link to="/login">Login</Link>
         </>
       )}
-    </nav>
+    </StyledNav>
   );
 }
