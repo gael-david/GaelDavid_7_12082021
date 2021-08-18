@@ -8,18 +8,18 @@ import LandingPage from "./pages/landing/LandingPage";
 import Feed from "./pages/feed/Feed";
 import Header from "./common/Header";
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    font-family: Verdana;
-    background: #06061d;
-    color: white;
-  }
+// const GlobalStyle = createGlobalStyle`
+//   body {
+//     font-family: Verdana;
+//     background: #06061d;
+//     color: white;
+//   }
 
-  a {
-    color: white;
-    text-decoration: none;
-  }
-`;
+//   a {
+//     color: white;
+//     text-decoration: none;
+//   }
+// `;
 
 export const IsLoggedContext = React.createContext();
 
@@ -35,14 +35,15 @@ function App() {
 
   return (
     <>
-      <Reset />
-      <GlobalStyle />
+      {/* <Reset /> */}
+      {/* <GlobalStyle /> */}
       <IsLoggedContext.Provider value={{ isLogged, setIsLogged }}>
         <Router>
           <div>
             <Header />
             <Switch>
               <Route path="/feed">{isLogged ? <Feed /> : <Redirect to="/login" />}</Route>
+              {/* <Route path="/profile">{isLogged ? <Profile /> : <Redirect to="/login" />}</Route> */}
               <Route path="/register">{isLogged ? <Redirect to="/feed" /> : <Register />}</Route>
               <Route path="/login">{isLogged ? <Redirect to="/feed" /> : <Login />}</Route>
               <Route path="/landing">{isLogged ? <Redirect to="/feed" /> : <LandingPage />}</Route>
