@@ -1,23 +1,21 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../mySQL");
 
-const User = sequelize.define("User", {
-  email: {
-    type: DataTypes.STRING,
-    unique: true,
+const Post = sequelize.define("Post", {
+  userId: {
+    type: DataTypes.UUID,
     allowNull: false,
   },
-  password: {
+  post: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  username: {
+  imageUrl: {
     type: DataTypes.STRING,
     allowNull: true,
-    default: "placeholder_username",
   },
 });
 
-User.sync();
+Post.sync();
 
-module.exports = User;
+module.exports = Post;

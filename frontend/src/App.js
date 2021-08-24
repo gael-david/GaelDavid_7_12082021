@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 import { Reset } from "styled-reset";
 import Register from "./pages/register/Register";
 import Login from "./pages/login/Login";
 import LandingPage from "./pages/landing/LandingPage";
-import Feed from "./pages/feed/Feed";
-import Header from "./common/Header";
+import FeedPage from "./pages/feed/FeedPage";
+import Header from "./common/components/Header";
+import { PrivateRoute } from "./common/components/PrivateRoute";
+import { PublicRoute } from "./common/components/PublicRoute";
 
 // const GlobalStyle = createGlobalStyle`
 //   body {
@@ -21,37 +23,22 @@ import Header from "./common/Header";
 //   }
 // `;
 
-export const IsLoggedContext = React.createContext();
-
 function App() {
-  const [isLogged, setIsLogged] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLogged(true);
-    }
-  }, []);
-
   return (
     <>
       {/* <Reset /> */}
       {/* <GlobalStyle /> */}
-      <IsLoggedContext.Provider value={{ isLogged, setIsLogged }}>
-        <Router>
-          <div>
-            <Header />
-            <Switch>
-              <Route path="/feed">{isLogged ? <Feed /> : <Redirect to="/login" />}</Route>
-              {/* <Route path="/profile">{isLogged ? <Profile /> : <Redirect to="/login" />}</Route> */}
-              <Route path="/register">{isLogged ? <Redirect to="/feed" /> : <Register />}</Route>
-              <Route path="/login">{isLogged ? <Redirect to="/feed" /> : <Login />}</Route>
-              <Route path="/landing">{isLogged ? <Redirect to="/feed" /> : <LandingPage />}</Route>
-              <Route path="/">{isLogged ? <Redirect to="/feed" /> : <LandingPage />}</Route>
-            </Switch>
-          </div>
-        </Router>
-      </IsLoggedContext.Provider>
+      <Router>
+        <div>
+          <Header />
+          <Switch>
+            <PrivateRoute component={<FeedPage />} redirectComponent={<LandingPage />} path="/" exact />
+            {/* <PrivateRoute component={Profile} path="/profile" /> */}
+            <PublicRoute component={<Register />} path="/register" />
+            <PublicRoute component={<Login />} path="/login" />
+          </Switch>
+        </div>
+      </Router>
     </>
   );
 }

@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -8,8 +8,10 @@ exports.registerUser = async (req, res) => {
     const user = await User.create({
       email: req.body.email,
       password: hash,
+      username: "placeholder_username",
     });
 
+    console.log(user)
     res.status(201).json({ message: `New user registered` });
   } catch (error) {
     res.status(400).json({ error });
@@ -29,7 +31,9 @@ exports.loginUser = async (req, res) => {
 
     res.status(200).json({
       id: user.id,
-      token: jwt.sign({ userId: user.id }, "RANDOM_TOKEN_SECRET", { expiresIn: "24h" }),
+      token: jwt.sign({ userId: user.id, email: user.email, username: user.username }, "RANDOM_TOKEN_SECRET", {
+        expiresIn: "24h",
+      }),
     });
   } catch (error) {
     res.status(500).json({ error });

@@ -1,7 +1,6 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { IsLoggedContext } from "../App";
+import { checkIfLogged } from "../../helpers/auth";
 
 const StyledNav = styled.nav`
   display: flex;
@@ -11,11 +10,12 @@ const StyledNav = styled.nav`
 `;
 
 export default function Header() {
-  const { isLogged, setIsLogged } = useContext(IsLoggedContext);
+  const history = useHistory();
+  const isLogged = checkIfLogged();
 
   function logOut() {
-    setIsLogged(false);
     localStorage.removeItem("token");
+    history.push("/");
   }
 
   return (

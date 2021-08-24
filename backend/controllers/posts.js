@@ -1,18 +1,27 @@
+const Post = require("../models/Post");
+
 exports.getAllPosts = async (req, res) => {
   try {
-    const posts = [
-      {
-        title: "Olympic Games",
-        content:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi molestias, dolorem quos aperiam officia labore odio qui hic voluptatibus esse reprehenderit cupiditate, provident sapiente laboriosam, suscipit accusamus repellendus. Doloribus, dicta!",
-      },
-      {
-        title: "World Cup",
-        content:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi molestias, dolorem quos aperiam officia labore odio qui hic voluptatibus esse reprehenderit cupiditate, provident sapiente laboriosam, suscipit accusamus repellendus. Doloribus, dicta!",
-      },
-    ];
+    const posts = await Post.findAll();
     res.status(200).json(posts);
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+};
+
+exports.createOnePost = async (req, res) => {
+  try {
+    const { userId, post } = req.body;
+
+    console.log(userId, post);
+    console.log(req.file);
+    const newPost = await Post.create({
+      userId,
+      post,
+      imageUrl: `${req.protocol}://${req.get("host")}/${req.file.path}`,
+    });
+
+    console.log(newPost);
   } catch (error) {
     res.status(400).json({ error });
   }

@@ -1,11 +1,16 @@
 const express = require("express");
 const app = express();
-const port = 4000;
+
+require("dotenv").config();
+const port = process.env.PORT;
 
 // parse application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 // parse application/json
 app.use(express.json());
+
+const path = require("path");
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 const cors = require("cors");
 app.use(cors());
