@@ -1,16 +1,40 @@
+import { faPaperPlane, faShare } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import styled from "styled-components";
 import { createPostAPI } from "../../api/createPost";
-import { useHistory } from "react-router";
 import { extractJwtToken } from "../../helpers/auth";
-import { homeUrl } from "../../helpers/variables";
+import Button from "./Button";
 
-// type Props = {
-//   title: string;
-//   onSubmit: (email: string, password: string) => Promise<void>;
-// };
+const CreatePostCard = styled.section`
+  display: flex;
+  gap: 2rem;
+  border-radius: 1rem;
+  background-color: #192734;
+  padding: 3rem;
+`;
 
-export default function CreatePostForm() {
-  const history = useHistory();
+const UserPicture = styled.img`
+  width: 5rem;
+  height: 5rem;
+  border-radius: 100%;
+  object-fit: cover;
+`;
+
+const PostInput = styled.input`
+  font-size: 20;
+  height: 5rem;
+  &:focus {
+    border: none;
+    outline: none;
+  }
+`;
+
+type Props = {
+  reloadFeed: () => void;
+};
+
+export default function CreatePostForm({ reloadFeed }: Props) {
   const userInfo = extractJwtToken();
   const [post, setPost] = useState<string>("");
   const [image, setImage] = useState<File>();
@@ -38,21 +62,35 @@ export default function CreatePostForm() {
       if (image) formData.append("image", image);
 
       await createPostAPI(formData);
-      history.push(homeUrl);
+      reloadFeed();
     } catch (error: any) {
       setError(error?.response?.data?.message);
     }
   }
 
   return (
-    <div>
-      <h1>Bonjour {userInfo?.username}, que voulez-vous dire ?</h1>
-      <input type="post" name="post" id="post" value={post} onChange={handlePost} />
-      <input type="file" name="image" id="image" onChange={handleImage} />
-      <button onClick={handleSubmit} disabled={isDisabled}>
-        Publier
-      </button>
-      {error && <div>{error}</div>}
-    </div>
+    <CreatePostCard>
+      <UserPicture src="/user.png" />
+      <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+        <PostInput
+          placeholder={`Quoi de neuf, ${userInfo?.username} ?`}
+          type="textarea"
+          name="post"
+          id="post"
+          value={post}
+          onChange={handlePost}
+        />
+        <div style={{ display: "flex", alignItems: "bottom", justifyContent: "space-between" }}>
+          <input type="file" name="image" id="image" placeholder="⌲" onChange={handleImage} />
+          <Button onClick={handleSubmit} primary disabled={isDisabled}>
+            <>
+              <FontAwesomeIcon icon={faPaperPlane} style={{ marginRight: 5 }} />
+              Publier
+            </>
+          </Button>
+        </div>
+        {error && <div>{error}</div>}
+      </div>
+    </CreatePostCard>
   );
 }

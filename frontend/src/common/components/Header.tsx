@@ -1,11 +1,17 @@
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { checkIfLogged } from "../../helpers/auth";
+import Button from "./Button";
+
+const CompanyLogo = styled.img`
+  height: 40px;
+`;
 
 const StyledNav = styled.nav`
   display: flex;
-  height: 80px;
+  height: 60px;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
 `;
 
@@ -22,14 +28,20 @@ export default function Header() {
     <StyledNav>
       {isLogged ? (
         <>
-          <Link to="/feed">Groupomania</Link>
-          <button onClick={logOut}>Logout</button>
+          <Link to="/feed">
+            <CompanyLogo src="/groupomania_icon.png" alt="Groupomania logo" />
+          </Link>
+          <Button onClick={logOut}>Logout</Button>
         </>
       ) : (
         <>
-          <Link to="/">Groupomania</Link>
-          <Link to="/register">Register</Link>
-          <Link to="/login">Login</Link>
+          <Link to="/feed">
+            <CompanyLogo src="/groupomania_icon.png" alt="Groupomania logo" />
+          </Link>
+          <div>
+            <Link to="/register">Register</Link>
+            <Link to="/login">Login</Link>
+          </div>
         </>
       )}
     </StyledNav>

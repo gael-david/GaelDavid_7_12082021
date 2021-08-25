@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../mySQL");
+const Post = require("./Post");
 
 const User = sequelize.define("User", {
   email: {
@@ -14,9 +15,11 @@ const User = sequelize.define("User", {
   username: {
     type: DataTypes.STRING,
     allowNull: true,
-    default: "placeholder_username",
+    default: "John Doe",
   },
 });
+
+User.belongsTo(Post); // A BelongsTo B
 
 User.sync();
 

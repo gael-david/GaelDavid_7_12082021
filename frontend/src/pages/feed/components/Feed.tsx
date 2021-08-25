@@ -1,36 +1,29 @@
-import { useEffect, useState } from "react";
-import { getAllPostsAPI } from "../../../api/getAllPosts";
+import { faNewspaper } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styled from "styled-components";
+import Post from "../../../common/components/Post";
+import { PostType } from "../../../interfaces/Post";
 
-type Posts = {
-  title: string;
-  content: string;
+type Props = {
+  posts: PostType[];
 };
 
-export default function Feed(): JSX.Element {
-  const [posts, setPosts] = useState<Posts[]>([]);
+const FeedSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+`;
 
-  async function fetchPosts() {
-    const allPosts = await getAllPostsAPI();
-    setPosts(allPosts);
-  }
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  console.log(posts);
-
+export default function Feed({ posts }: Props): JSX.Element {
   return (
-    <div>
-      <h1>Feed</h1>
-      {posts?.map((post, index) => {
-        return (
-          <div key={index}>
-            <h2>{post.title}</h2>
-            <p>{post.content}</p>
-          </div>
-        );
-      })}
-    </div>
+    <FeedSection>
+      <h1>
+        <FontAwesomeIcon icon={faNewspaper} style={{ marginRight: 8 }} />
+        Votre feed
+      </h1>
+      {posts?.map((post) => (
+        <Post key={post.id} id={post.id} post={post.post} userId={post.userId} imageUrl={post.imageUrl} />
+      ))}
+    </FeedSection>
   );
 }

@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../mySQL");
+const User = require("./User");
 
 const Post = sequelize.define("Post", {
   userId: {
@@ -15,6 +16,8 @@ const Post = sequelize.define("Post", {
     allowNull: true,
   },
 });
+
+// Post.hasOne(User);
 
 Post.sync();
 
