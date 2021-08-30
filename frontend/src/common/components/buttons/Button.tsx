@@ -9,16 +9,23 @@ const StyledButton = styled.button<StyledProps>`
   font-size: 1.6rem;
   width: min-content;
   padding: 1rem 2rem;
+  height: 4rem;
   border-radius: 10px;
   border: none;
   background: ${(props) => (props.primary ? "rgb(0, 186, 124)" : "#30465d")};
   color: white;
   white-space: nowrap;
+  cursor: pointer;
+  &:disabled {
+    cursor: auto;
+    background: rgb(0 186 124 / 28%);
+    color: #192734;
+  }
 `;
 
 type Props = {
   onClick: () => unknown;
-  children: JSX.Element | string;
+  children?: React.ReactNode;
   disabled?: boolean;
   primary?: boolean;
   style?: CSS.Properties;

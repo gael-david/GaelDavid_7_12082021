@@ -1,5 +1,6 @@
 import axios from "axios";
-import { baseUrl } from "../helpers/variables";
+import { extractJwtToken, getJwtToken } from "../helpers/auth";
+import { BASE_URL } from "../helpers/variables";
 
 type FormData = {
   userId: string;
@@ -10,9 +11,10 @@ type FormData = {
 export async function createPostAPI(formData: any) {
   try {
 
-    const res = await axios.post(`${baseUrl}/api/posts/create`, formData, {
+    const res = await axios.post(`${BASE_URL}/api/posts/create`, formData, {
     headers: {
-      'content-Type': 'multipart/form-data'
+      'content-Type': 'multipart/form-data',
+      'authorization': `Bearer ${getJwtToken()}`
     }
   });
 

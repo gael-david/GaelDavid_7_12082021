@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Redirect, Route } from "react-router";
-import { checkIfLogged } from "../../helpers/auth";
+import { checkIfLogged } from "../../../helpers/auth";
+import Header from "../blocks/Header";
 
 type Props = {
   component: Component;
@@ -15,12 +16,14 @@ export function PrivateRoute({ path, redirectPath = "/login", component, redirec
   if (isLogged)
     return (
       <Route path={path} {...props}>
+        <Header />
         {component}
       </Route>
     );
 
   return redirectComponent ? (
     <Route path={path} {...props}>
+      <Header />
       {redirectComponent}
     </Route>
   ) : (

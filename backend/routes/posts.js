@@ -9,9 +9,11 @@ const multer = require("../middlewares/multer");
 const postsControllers = require("../controllers/posts");
 
 // Routes
-router.get("/", postsControllers.getAllPosts);
+router.get("/", checkAuth, postsControllers.getAllPosts);
 
 // router.get("/:id", checkAuth, postsControllers.getOnePost);
+
+router.get("/user/:id", postsControllers.getUserPosts);
 
 router.post("/create", multer, postsControllers.createOnePost);
 

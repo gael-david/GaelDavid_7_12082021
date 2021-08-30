@@ -1,2 +1,4 @@
-export const baseUrl = process.env.REACT_APP_BASE_URL;
-export const homeUrl = "/"
+export const BASE_URL = process.env.REACT_APP_BASE_URL;
+export const HOME_URL = "/";
+
+export const MAX_CHARACTERS = 180;

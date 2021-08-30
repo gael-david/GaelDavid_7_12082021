@@ -18,7 +18,7 @@ app.use(cors());
 const helmet = require("helmet");
 app.use(helmet());
 
-const { SQLConnection } = require("./mySQL");
+const SQLConnection = require("./sequelize/init");
 SQLConnection();
 
 // Routes

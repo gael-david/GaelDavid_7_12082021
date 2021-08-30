@@ -1,16 +1,17 @@
 import axios from "axios";
-import { baseUrl } from "../helpers/variables";
+import { BASE_URL } from "../helpers/variables";
 import { loginAPI } from "./login";
 
-export async function registerAPI(email: string, password: string) {
+export async function registerAPI(username: string, email: string, password: string) {
   try {
-    await axios.post(`${baseUrl}/api/auth/register`, {
+    await axios.post(`${BASE_URL}/api/auth/register`, {
+      username,
       email,
       password,
     });
 
-    const res = await loginAPI(email, password);
-    const {token} = res.data;
+    const token = await loginAPI(email, password);
+
     return token;
   } catch (error) {
     return error;

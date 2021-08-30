@@ -1,7 +1,7 @@
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import { checkIfLogged } from "../../helpers/auth";
-import Button from "./Button";
+import { checkIfLogged } from "../../../helpers/auth";
+import Button from "../buttons/Button";
 
 const CompanyLogo = styled.img`
   height: 40px;
@@ -12,6 +12,11 @@ const StyledNav = styled.nav`
   height: 60px;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
+`;
+
+const NavGroup = styled.div`
+  display: flex;
   gap: 1rem;
 `;
 
@@ -26,23 +31,16 @@ export default function Header() {
 
   return (
     <StyledNav>
+      <Link to="/">
+        <CompanyLogo src="/groupomania_icon.png" alt="Groupomania logo" />
+      </Link>
       {isLogged ? (
-        <>
-          <Link to="/feed">
-            <CompanyLogo src="/groupomania_icon.png" alt="Groupomania logo" />
-          </Link>
-          <Button onClick={logOut}>Logout</Button>
-        </>
+        <Button onClick={logOut}>Logout</Button>
       ) : (
-        <>
-          <Link to="/feed">
-            <CompanyLogo src="/groupomania_icon.png" alt="Groupomania logo" />
-          </Link>
-          <div>
-            <Link to="/register">Register</Link>
-            <Link to="/login">Login</Link>
-          </div>
-        </>
+        <NavGroup>
+          <Link to="/register">Register</Link>
+          <Link to="/login">Login</Link>
+        </NavGroup>
       )}
     </StyledNav>
   );

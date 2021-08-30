@@ -1,17 +1,20 @@
-const User = require("../models/User");
+const { models } = require("../sequelize/config");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const jwtSecret = process.env.SQL_DB;
 
 exports.registerUser = async (req, res) => {
   try {
-    const hash = await bcrypt.hash(req.body.password, 10);
-    const user = await User.create({
-      email: req.body.email,
+    const { password, email, username } = req.body;
+    const hash = await bcrypt.hash(password, 10);
+    const user = await models.user.create({
+      email: email,
+      username: username,
       password: hash,
-      username: "placeholder_username",
+      image: `https://avatars.dicebear.com/api/bottts/${username}.svg`,
     });
 
-    console.log(user)
+    console.log(user);
     res.status(201).json({ message: `New user registered` });
   } catch (error) {
     res.status(400).json({ error });
@@ -21,7 +24,7 @@ exports.registerUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ where: { email: email } });
+    const user = await models.user.findOne({ where: { email: email } });
 
     if (!user) return res.status(401).json({ message: "User not found." });
 
@@ -31,8 +34,8 @@ exports.loginUser = async (req, res) => {
 
     res.status(200).json({
       id: user.id,
-      token: jwt.sign({ userId: user.id, email: user.email, username: user.username }, "RANDOM_TOKEN_SECRET", {
-        expiresIn: "24h",
+      token: jwt.sign({ userId: user.id, email: user.email, username: user.username, image: user.image }, jwtSecret, {
+        expiresIn: "72h",
       }),
     });
   } catch (error) {

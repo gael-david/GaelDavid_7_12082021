@@ -1,7 +1,7 @@
 import { Redirect, useHistory } from "react-router-dom";
-import AuthForm from "../../common/components/AuthForm";
-import { loginAPI } from "../../api/login";
-import { checkIfLogged } from "../../helpers/auth";
+import LoginForm from "../components/LoginForm";
+import { loginAPI } from "../../../api/login";
+import { checkIfLogged } from "../../../helpers/auth";
 
 export default function Login() {
   const history = useHistory();
@@ -14,5 +14,5 @@ export default function Login() {
 
   if (isLogged) return <Redirect to="/" />;
 
-  return <AuthForm title="Login" onSubmit={loginUser} />;
+  return <LoginForm onSubmit={loginUser} />;
 }

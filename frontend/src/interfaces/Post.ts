@@ -1,6 +1,10 @@
 export type PostType = {
   id: string;
   post: string;
-  userId: string;
   imageUrl?: string;
+  user?: {
+    id?: string;
+    username?: string;
+    image?: string;
+  }
 };
