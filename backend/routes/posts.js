@@ -21,6 +21,6 @@ router.post("/create", multer, postsControllers.createOnePost);
 
 // router.put("/:id", checkAuth, multer, postsControllers.updateOnePost);
 
-// router.delete("/:id", checkAuth, postsControllers.deleteOnePost);
+router.delete("/:id", checkAuth, postsControllers.deleteOnePost);
 
 module.exports = router;

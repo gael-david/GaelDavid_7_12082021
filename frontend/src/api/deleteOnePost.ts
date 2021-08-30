@@ -2,16 +2,9 @@ import axios from "axios";
 import { getJwtToken } from "../helpers/auth";
 import { BASE_URL } from "../helpers/variables";
 
-type FormData = {
-  userId: string;
-  post: string;
-  image?: File
-}
-
-export async function createPostAPI(formData: any) {
+export async function deleteOnePostAPI(id: string) {
   try {
-
-    const res = await axios.post(`${BASE_URL}/api/posts/create`, formData, {
+    const res = await axios.delete(`${BASE_URL}/api/posts/${id}`, {
     headers: {
       'content-Type': 'multipart/form-data',
       'authorization': `Bearer ${getJwtToken()}`

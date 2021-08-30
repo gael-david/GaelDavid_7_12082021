@@ -7,6 +7,7 @@ import { PostType } from "../../../interfaces/Post";
 type Props = {
   title: string;
   posts: PostType[];
+  onUpdated?: () => void;
 };
 
 const FeedSection = styled.section`
@@ -15,7 +16,7 @@ const FeedSection = styled.section`
   gap: 2rem;
 `;
 
-export default function Feed({ title, posts }: Props): JSX.Element {
+export default function Feed({ title, posts, onUpdated }: Props): JSX.Element {
   return (
     <FeedSection>
       <h2>
@@ -24,7 +25,14 @@ export default function Feed({ title, posts }: Props): JSX.Element {
       </h2>
       {posts.length
         ? posts?.map((post) => (
-            <Post key={post.id} id={post.id} post={post.post} user={post.user} imageUrl={post.imageUrl} />
+            <Post
+              key={post.id}
+              id={post.id}
+              post={post.post}
+              user={post.user}
+              imageUrl={post.imageUrl}
+              onUpdated={onUpdated}
+            />
           ))
         : "Aucun post à afficher !"}
     </FeedSection>

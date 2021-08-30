@@ -38,10 +38,10 @@ const CounterAndPublishWrapper = styled.div`
 `;
 
 type Props = {
-  reloadFeed: () => void;
+  onUpdated: () => void;
 };
 
-export default function CreatePostForm({ reloadFeed }: Props) {
+export default function CreatePostForm({ onUpdated }: Props) {
   const user = extractJwtToken();
   const [post, setPost] = useState<string>("");
   const [image, setImage] = useState<File>();
@@ -55,6 +55,11 @@ export default function CreatePostForm({ reloadFeed }: Props) {
 
   function handleImage(e: React.ChangeEvent<HTMLInputElement>) {
     setImage(e?.target?.files?.[0]);
+  }
+
+  function resetState() {
+    setPost("");
+    setImage(undefined);
   }
 
   const isDisabled = post === "";
@@ -71,7 +76,8 @@ export default function CreatePostForm({ reloadFeed }: Props) {
       if (image) formData.append("image", image);
 
       await createPostAPI(formData);
-      reloadFeed();
+      resetState();
+      onUpdated();
     } catch (error: any) {
       setError(error?.response?.data?.message);
     }

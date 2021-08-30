@@ -19,8 +19,8 @@ export default function FeedPage() {
 
   return (
     <CentralContainer>
-      <CreatePostForm reloadFeed={fetchPosts} />
-      <Feed title="Votre feed" posts={posts} />
+      <CreatePostForm onUpdated={fetchPosts} />
+      <Feed title="Votre feed" posts={posts} onUpdated={fetchPosts} />
     </CentralContainer>
   );
 }

@@ -2,8 +2,14 @@ import styled from "styled-components";
 import { PostType } from "../../../interfaces/Post";
 import { UserPicture } from "../../../common/components/widgets/UserPicture";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { extractJwtToken } from "../../../helpers/auth";
+import { deleteOnePostAPI } from "../../../api/deleteOnePost";
 
-type Props = PostType;
+type Props = PostType & {
+  onUpdated?: () => void;
+};
 
 const PostCard = styled.article`
   border: 1px solid rgb(56, 68, 77);
@@ -24,7 +30,8 @@ const PostContent = styled.div`
 
 const PostHeader = styled.div`
   display: flex;
-  flex-direction: column;
+  gap: 2rem;
+  justify-content: space-between;
   gap: 1rem;
 `;
 
@@ -42,15 +49,28 @@ const PostImage = styled.img`
   border-radius: 1rem;
 `;
 
-export default function Post({ post, imageUrl, user }: Props): JSX.Element {
+export default function Post({ id, post, imageUrl, user, onUpdated }: Props): JSX.Element {
+  const token = extractJwtToken();
+  const fromUser = user?.id === token?.userId;
+
+  async function onDeletePost() {
+    try {
+      await deleteOnePostAPI(id);
+      onUpdated?.();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <PostCard>
       <UserPicture src={user?.image} />
       <PostContent>
         <PostHeader>
           <PostUser to={`/user/${user?.id}`}>{user?.username}</PostUser>
-          <p>{post}</p>
+          {fromUser && <FontAwesomeIcon icon={faTrash} onClick={onDeletePost} />}
         </PostHeader>
+        <p>{post}</p>
         {imageUrl && <PostImage src={imageUrl} alt={`Post from ${user?.id}`} />}
       </PostContent>
     </PostCard>
