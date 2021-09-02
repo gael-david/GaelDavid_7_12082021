@@ -7,6 +7,9 @@ module.exports = function makeAssociations(sequelize) {
   user.hasMany(comment);
   comment.belongsTo(user);
 
+  post.hasMany(comment);
+  comment.belongsTo(post);
+
   user.hasMany(like);
   like.belongsTo(user);
 

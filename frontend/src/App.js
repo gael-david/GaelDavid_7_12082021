@@ -5,6 +5,7 @@ import RegisterPage from "./features/register/RegisterPage";
 import LoginPage from "./features/login/pages/LoginPage";
 import LandingPage from "./features/landing/pages/LandingPage";
 import FeedPage from "./features/feed/pages/FeedPage";
+import PostPage from "./features/post/pages/PostPage";
 import UserPage from "./features/user/pages/UserPage";
 import GlobalLayout from "./common/components/layouts/GlobalLayout";
 import { PrivateRoute } from "./common/components/routes/PrivateRoute";
@@ -22,6 +23,8 @@ const GlobalStyle = createGlobalStyle`
     background: rgb(21, 32, 43);
     color: white;
     padding: 2rem;
+    max-width: 100rem;
+    margin: auto;
   }
 
   * {
@@ -55,6 +58,7 @@ function App() {
         <GlobalLayout>
           <Switch>
             <PrivateRoute component={<FeedPage />} redirectComponent={<LandingPage />} path="/" exact />
+            <PrivateRoute component={<PostPage />} redirectComponent={<LandingPage />} path="/post/:id" exact />
             <PrivateRoute component={<UserPage />} path="/user/:id" />
             <PublicRoute component={<RegisterPage />} path="/register" />
             <PublicRoute component={<LoginPage />} path="/login" />

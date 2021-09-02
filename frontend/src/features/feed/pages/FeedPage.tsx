@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllPostsAPI } from "../../../api/getAllPosts";
-import CreatePostForm from "../../creation/components/CreatePostForm";
+import CreatePostForm from "../../post/components/CreatePostForm";
 import Feed from "../components/Feed";
 import { PostType } from "../../../interfaces/Post";
 import { CentralContainer } from "../../../common/components/layouts/CentralContainer";

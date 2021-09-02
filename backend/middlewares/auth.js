@@ -3,11 +3,9 @@ const jwtSecret = process.env.SQL_DB;
 
 module.exports = (req, res, next) => {
   try {
-    console.log("test");
     const token = req.headers.authorization.split(" ")[1];
-    console.log(token);
+
     const decodedToken = jwt.verify(token, jwtSecret);
-    console.log("decodedToken:", decodedToken);
 
     const userId = decodedToken.userId;
 

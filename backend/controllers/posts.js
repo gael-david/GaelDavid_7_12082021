@@ -20,6 +20,27 @@ exports.getAllPosts = async (req, res) => {
   }
 };
 
+exports.getOnePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const post = await models.post.findOne({
+      where: { id: id },
+      include: [
+        {
+          model: models.user,
+          attributes: ["email", "username", "image", "id"],
+        },
+      ],
+    });
+
+    res.status(201).json(post);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error });
+  }
+};
+
 exports.getUserPosts = async (req, res) => {
   try {
     const { id } = req.params;
@@ -80,5 +101,29 @@ exports.deleteOnePost = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).json({ error });
+  }
+};
+
+exports.getComments = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const comments = await models.comment.findAll({
+      where: {
+        postId: id,
+      },
+      include: [
+        {
+          model: models.user,
+          attributes: ["email", "username", "image", "id"],
+        },
+      ],
+    });
+
+    comments.reverse();
+    res.status(200).json(comments);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json(error);
   }
 };
