@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import CSS from "csstype";
 
-type StyledProps = {
+export type StyledProps = {
   primary?: boolean;
 };
 
-const StyledButton = styled.button<StyledProps>`
+export const baseButtonStyle = css<StyledProps>`
   font-size: 1.6rem;
   width: min-content;
   padding: 1rem 2rem;
@@ -21,6 +21,10 @@ const StyledButton = styled.button<StyledProps>`
     background: rgb(0 186 124 / 28%);
     color: #192734;
   }
+`;
+
+const StyledButton = styled.button<StyledProps>`
+  ${baseButtonStyle}
 `;
 
 type Props = {

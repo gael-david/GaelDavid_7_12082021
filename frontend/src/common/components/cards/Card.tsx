@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Card = styled.article`
@@ -27,12 +26,6 @@ export const CardHeader = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 2rem;
-`;
-
-export const CardUser = styled(Link)`
-  font-size: 2rem;
-  font-weight: 600;
-  width: fit-content;
 `;
 
 export const CardImage = styled.img`

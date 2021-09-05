@@ -2,6 +2,7 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { checkIfLogged } from "../../../helpers/auth";
 import Button from "../buttons/Button";
+import ButtonLink from "../buttons/ButtonLink";
 
 const CompanyLogo = styled.img`
   height: 40px;
@@ -38,8 +39,10 @@ export default function Header() {
         <Button onClick={logOut}>Logout</Button>
       ) : (
         <NavGroup>
-          <Link to="/register">Register</Link>
-          <Link to="/login">Login</Link>
+          <ButtonLink to="/register">Register</ButtonLink>
+          <ButtonLink primary to="/login">
+            Login
+          </ButtonLink>
         </NavGroup>
       )}
     </StyledNav>

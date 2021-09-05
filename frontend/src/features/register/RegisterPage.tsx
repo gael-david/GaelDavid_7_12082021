@@ -1,5 +1,6 @@
 import { Redirect, useHistory } from "react-router-dom";
 import { registerAPI } from "../../api/register";
+import { CentralContainer } from "../../common/components/layouts/CentralContainer";
 import { checkIfLogged } from "../../helpers/auth";
 import RegisterForm from "./RegisterForm";
 
@@ -15,5 +16,9 @@ export default function Register() {
 
   if (isLogged) return <Redirect to="/" />;
 
-  return <RegisterForm onSubmit={registerUser} />;
+  return (
+    <CentralContainer>
+      <RegisterForm onSubmit={registerUser} />
+    </CentralContainer>
+  );
 }

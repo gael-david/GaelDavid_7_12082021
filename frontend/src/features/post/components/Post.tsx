@@ -1,46 +1,54 @@
 import { PostType } from "../../../interfaces/Post";
-import { UserPicture } from "../../../common/components/widgets/UserPicture";
+import UserPicture from "../../../common/components/widgets/UserPicture";
 import { useHistory } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { extractJwtToken } from "../../../helpers/auth";
 import { deleteOnePostAPI } from "../../../api/deleteOnePost";
-import PostFooter from "../../../common/components/cards/CardFooter";
-import { Card, CardContent, CardHeader, CardImage, CardUser } from "../../../common/components/cards/Card";
+import CardFooter from "../../../common/components/cards/CardFooter";
+import { Card, CardContent, CardHeader, CardImage } from "../../../common/components/cards/Card";
+import UserName from "../../../common/components/widgets/UserName";
+import DeleteButton from "../../../common/components/buttons/DeleteButton";
+import { AxiosError } from "axios";
+import { useState } from "react";
+import ErrorHandler from "../../error/ErrorHandler";
 
 type Props = PostType & {
   onUpdated?: () => void;
 };
 
 export default function Post({ id, post, imageUrl, user, onUpdated }: Props): JSX.Element {
-  const token = extractJwtToken();
-  const fromUser = user?.id === token?.userId;
+  const currentUser = extractJwtToken();
+  const isFromUser = user?.id === currentUser?.id;
+  const [error, setError] = useState<AxiosError>(null);
+
   let history = useHistory();
 
-  async function onDeletePost() {
+  async function onDeletePost(e: React.MouseEvent<SVGSVGElement>) {
+    e.stopPropagation();
     try {
       await deleteOnePostAPI(id);
       onUpdated?.();
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      setError(error);
     }
   }
 
-  function redirectToPost() {
+  function redirectToPost(e: any) {
     history.push(`/post/${id}`);
   }
 
+  if (error) return <ErrorHandler error={error} />;
+
   return (
     <Card onClick={redirectToPost}>
-      <UserPicture src={user?.image} />
+      <UserPicture user={user} />
       <CardContent>
         <CardHeader>
-          <CardUser to={`/user/${user?.id}`}>{user?.username}</CardUser>
-          {fromUser && <FontAwesomeIcon icon={faTrash} onClick={onDeletePost} />}
+          <UserName user={user} />
+          {isFromUser && <DeleteButton onDelete={onDeletePost} />}
         </CardHeader>
         <p>{post}</p>
         {imageUrl && <CardImage src={imageUrl} alt={`Post from ${user?.id}`} />}
-        <PostFooter />
+        {/* <CardFooter /> */}
       </CardContent>
     </Card>
   );

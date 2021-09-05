@@ -87,9 +87,11 @@ exports.deleteOnePost = async (req, res) => {
     const post = await models.post.findOne({ where: { id: id } });
     console.log(post);
 
-    const filename = post.imageUrl.split("/images/")[1];
-    // Remove sauce image from the images folder
-    fs.unlink(`images/${filename}`, (err) => (err ? console.log("unlink failed", err) : console.log("file deleted")));
+    if (post.imageUrl) {
+      const filename = post?.imageUrl?.split("/images/")[1];
+      // Remove sauce image from the images folder
+      fs.unlink(`images/${filename}`, (err) => (err ? console.log("unlink failed", err) : console.log("file deleted")));
+    }
 
     await models.post.destroy({
       where: {
@@ -120,10 +122,43 @@ exports.getComments = async (req, res) => {
       ],
     });
 
-    comments.reverse();
     res.status(200).json(comments);
   } catch (error) {
     console.log(error);
     res.status(400).json(error);
+  }
+};
+
+exports.createOneComment = async (req, res) => {
+  try {
+    const { userId, postId, comment } = req.body;
+
+    console.log("request body yes:", req.body);
+    const newComment = await models.comment.create({
+      userId,
+      postId,
+      comment,
+    });
+
+    res.status(200).json("Comment created");
+  } catch (error) {
+    res.status(400).json({ error });
+  }
+};
+
+exports.deleteOneComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await models.comment.destroy({
+      where: {
+        id: id,
+      },
+    });
+
+    res.status(201).json("Comment deleted");
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ error });
   }
 };

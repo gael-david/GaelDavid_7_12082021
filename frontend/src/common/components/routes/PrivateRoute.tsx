@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Redirect, Route } from "react-router";
 import { checkIfLogged } from "../../../helpers/auth";
+import Footer from "../blocks/Footer";
 import Header from "../blocks/Header";
 
 type Props = {
@@ -18,6 +19,7 @@ export function PrivateRoute({ path, redirectPath = "/login", component, redirec
       <Route path={path} {...props}>
         <Header />
         {component}
+        <Footer />
       </Route>
     );
 
@@ -25,6 +27,7 @@ export function PrivateRoute({ path, redirectPath = "/login", component, redirec
     <Route path={path} {...props}>
       <Header />
       {redirectComponent}
+      <Footer />
     </Route>
   ) : (
     <Redirect to={redirectPath} />

@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { Route } from "react-router";
+import Footer from "../blocks/Footer";
 import Header from "../blocks/Header";
 
 type Props = {
@@ -12,6 +13,7 @@ export function PublicRoute({ path, component, ...props }: Props) {
     <Route path={path} {...props}>
       <Header />
       {component}
+      <Footer />
     </Route>
   );
 }

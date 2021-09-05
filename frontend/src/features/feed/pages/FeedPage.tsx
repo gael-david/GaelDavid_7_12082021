@@ -4,18 +4,27 @@ import CreatePostForm from "../../post/components/CreatePostForm";
 import Feed from "../components/Feed";
 import { PostType } from "../../../interfaces/Post";
 import { CentralContainer } from "../../../common/components/layouts/CentralContainer";
+import ErrorHandler from "../../error/ErrorHandler";
+import { AxiosError } from "axios";
 
 export default function FeedPage() {
   const [posts, setPosts] = useState<PostType[]>([]);
+  const [error, setError] = useState<AxiosError>(null);
 
   async function fetchPosts() {
-    const allPosts = await getAllPostsAPI();
-    setPosts(allPosts);
+    try {
+      const allPosts = await getAllPostsAPI();
+      setPosts(allPosts);
+    } catch (error: any) {
+      setError(error);
+    }
   }
 
   useEffect(() => {
     fetchPosts();
   }, []);
+
+  if (error) return <ErrorHandler error={error} />;
 
   return (
     <CentralContainer>

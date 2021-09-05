@@ -1,10 +1,8 @@
+import { User } from "./User";
+
 export type PostType = {
   id: string;
   post: string;
   imageUrl?: string;
-  user?: {
-    id?: string;
-    username?: string;
-    image?: string;
-  }
+  user?: User;
 };

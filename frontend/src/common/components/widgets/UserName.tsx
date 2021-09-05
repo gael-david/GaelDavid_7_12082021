@@ -2,20 +2,21 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { User } from "../../../interfaces/User";
 
-export const StyledUserPicture = styled.img`
-  width: 5rem;
-  height: 5rem;
-  border-radius: 100%;
-  object-fit: cover;
+export const StyledUserName = styled.div`
+  font-weight: 700;
+  width: fit-content;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 type Props = {
   user: User;
 };
 
-export default function UserPicture({ user }: Props) {
+export default function UserName({ user }: Props) {
   let history = useHistory();
-
   function redirectToUser(e: any) {
     e.stopPropagation();
     history.push(`/user/${user?.id}`);
@@ -23,5 +24,5 @@ export default function UserPicture({ user }: Props) {
 
   if (!user) return null;
 
-  return <StyledUserPicture src={user?.image} onClick={redirectToUser} />;
+  return <StyledUserName onClick={redirectToUser}>{user?.username}</StyledUserName>;
 }

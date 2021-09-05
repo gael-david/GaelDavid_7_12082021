@@ -7,9 +7,11 @@ import { extractJwtToken } from "../../../helpers/auth";
 import { MAX_CHARACTERS } from "../../../helpers/variables";
 import Button from "../../../common/components/buttons/Button";
 import ImageUploadButton from "../../../common/components/buttons/ImageUploadButton";
-import { UserPicture } from "../../../common/components/widgets/UserPicture";
+import UserPicture from "../../../common/components/widgets/UserPicture";
 import TextArea from "../../../common/components/inputs/TextArea";
 import CharacterCounter from "./CharacterCounter";
+import { AxiosError } from "axios";
+import ErrorHandler from "../../error/ErrorHandler";
 
 const CreatePostCard = styled.section`
   display: flex;
@@ -19,7 +21,7 @@ const CreatePostCard = styled.section`
   padding: 3rem;
 `;
 
-const MainWrapper = styled.div`
+export const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -42,10 +44,10 @@ type Props = {
 };
 
 export default function CreatePostForm({ onUpdated }: Props) {
-  const user = extractJwtToken();
+  const currentUser = extractJwtToken();
   const [post, setPost] = useState<string>("");
   const [image, setImage] = useState<File>();
-  const [error, setError] = useState<string>("");
+  const [error, setError] = useState<AxiosError>(null);
 
   function handlePost(e: React.ChangeEvent<HTMLTextAreaElement>) {
     const input = e?.currentTarget?.value;
@@ -68,7 +70,7 @@ export default function CreatePostForm({ onUpdated }: Props) {
     if (isDisabled) return;
 
     try {
-      const userId = user?.userId.toString();
+      const userId = currentUser?.id.toString();
       if (!userId) return;
       const formData = new FormData();
       formData.append("userId", userId);
@@ -79,16 +81,18 @@ export default function CreatePostForm({ onUpdated }: Props) {
       resetState();
       onUpdated();
     } catch (error: any) {
-      setError(error?.response?.data?.message);
+      setError(error);
     }
   }
 
+  if (error) return <ErrorHandler error={error} />;
+
   return (
     <CreatePostCard>
-      <UserPicture src={user?.image} />
+      <UserPicture user={currentUser} />
       <MainWrapper>
         <TextArea
-          placeholder={`Quoi de neuf, ${user?.username} ?`}
+          placeholder={`Quoi de neuf, ${currentUser?.username} ?`}
           name="post"
           value={post}
           onChange={handlePost}

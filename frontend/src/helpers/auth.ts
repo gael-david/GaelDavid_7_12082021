@@ -1,12 +1,12 @@
 import jwt_decode from "jwt-decode";
 
 export type UserTokenInfo = {
-  userId: number;
-    email: string;
+  id: string;
+  email: string;
   username: string;
   image: string;
   exp: number;
-iat: number;
+  iat: number;
 }
 
 export function checkIfLogged(): boolean {

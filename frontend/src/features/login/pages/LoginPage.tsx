@@ -2,6 +2,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import LoginForm from "../components/LoginForm";
 import { loginAPI } from "../../../api/login";
 import { checkIfLogged } from "../../../helpers/auth";
+import { CentralContainer } from "../../../common/components/layouts/CentralContainer";
 
 export default function Login() {
   const history = useHistory();
@@ -14,5 +15,9 @@ export default function Login() {
 
   if (isLogged) return <Redirect to="/" />;
 
-  return <LoginForm onSubmit={loginUser} />;
+  return (
+    <CentralContainer>
+      <LoginForm onSubmit={loginUser} />
+    </CentralContainer>
+  );
 }

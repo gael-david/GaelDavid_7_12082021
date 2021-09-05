@@ -25,4 +25,8 @@ router.delete("/:id", checkAuth, postsControllers.deleteOnePost);
 
 router.get("/:id/comments", checkAuth, postsControllers.getComments);
 
+router.post("/comments/create", checkAuth, postsControllers.createOneComment);
+
+router.delete("/comments/:id", checkAuth, postsControllers.deleteOneComment);
+
 module.exports = router;

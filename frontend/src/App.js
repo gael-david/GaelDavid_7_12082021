@@ -13,6 +13,11 @@ import { PublicRoute } from "./common/components/routes/PublicRoute";
 
 const GlobalStyle = createGlobalStyle`
 
+  html, body, #root {
+    min-height: 100vh;
+    height: 100%;
+  }
+
   html {
     font-size: 62.5%;
   }
@@ -22,13 +27,18 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.6rem;
     background: rgb(21, 32, 43);
     color: white;
-    padding: 2rem;
     max-width: 100rem;
     margin: auto;
   }
 
+  #root {
+    padding: 2rem;
+    height: 100%;
+  }
+
   * {
     font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
   }
 
   h1 {
@@ -46,6 +56,10 @@ const GlobalStyle = createGlobalStyle`
   a {
     color: white;
     text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 
@@ -57,8 +71,8 @@ function App() {
       <Router>
         <GlobalLayout>
           <Switch>
-            <PrivateRoute component={<FeedPage />} redirectComponent={<LandingPage />} path="/" exact />
-            <PrivateRoute component={<PostPage />} redirectComponent={<LandingPage />} path="/post/:id" exact />
+            <PrivateRoute component={<FeedPage />} path="/" exact />
+            <PrivateRoute component={<PostPage />} path="/post/:id" exact />
             <PrivateRoute component={<UserPage />} path="/user/:id" />
             <PublicRoute component={<RegisterPage />} path="/register" />
             <PublicRoute component={<LoginPage />} path="/login" />
