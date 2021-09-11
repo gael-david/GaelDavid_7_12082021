@@ -7,6 +7,7 @@ export const StyledUserPicture = styled.img`
   height: 5rem;
   border-radius: 100%;
   object-fit: cover;
+  cursor: pointer;
 `;
 
 type Props = {

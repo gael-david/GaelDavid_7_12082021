@@ -17,6 +17,7 @@ const UploadButton = styled.label`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const FileName = styled.p`
