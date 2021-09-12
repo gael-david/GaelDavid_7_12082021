@@ -3,7 +3,6 @@ import UserPicture from "../../../common/components/widgets/UserPicture";
 import { useHistory } from "react-router-dom";
 import { extractJwtToken } from "../../../helpers/auth";
 import { deleteOnePostAPI } from "../../../api/deleteOnePost";
-import CardFooter from "../../../common/components/cards/CardFooter";
 import { Card, CardContent, CardHeader, CardImage } from "../../../common/components/cards/Card";
 import UserName from "../../../common/components/widgets/UserName";
 import DeleteButton from "../../../common/components/buttons/DeleteButton";

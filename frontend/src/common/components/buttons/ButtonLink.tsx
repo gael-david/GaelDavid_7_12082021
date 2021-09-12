@@ -16,7 +16,7 @@ type Props = {
 
 export default function Button({ to, children, primary = false, style, ...props }: Props) {
   return (
-    <StyledButtonLink to={to} primary={primary} style={style} {...props}>
+    <StyledButtonLink to={to} $primary={primary} style={style} {...props}>
       {children}
     </StyledButtonLink>
   );

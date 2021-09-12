@@ -11,4 +11,6 @@ router.post("/register", authControllers.registerUser);
 
 router.post("/login", authControllers.loginUser);
 
+router.delete("/delete", authControllers.deleteUser);
+
 module.exports = router;

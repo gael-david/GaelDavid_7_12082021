@@ -3,7 +3,6 @@ import { createGlobalStyle } from "styled-components";
 import { Reset } from "styled-reset";
 import RegisterPage from "./features/register/RegisterPage";
 import LoginPage from "./features/login/pages/LoginPage";
-import LandingPage from "./features/landing/pages/LandingPage";
 import FeedPage from "./features/feed/pages/FeedPage";
 import PostPage from "./features/post/pages/PostPage";
 import UserPage from "./features/user/pages/UserPage";
@@ -13,7 +12,7 @@ import { PublicRoute } from "./common/components/routes/PublicRoute";
 
 const GlobalStyle = createGlobalStyle`
 
-  html, body, #root {
+  body, #root {
     min-height: 100vh;
     height: 100%;
   }

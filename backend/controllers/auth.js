@@ -42,3 +42,21 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ error });
   }
 };
+
+exports.deleteUser = async (req, res) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+
+    const decodedToken = jwt.verify(token, jwtSecret);
+
+    const userId = decodedToken.id;
+
+    console.log("User to delete: ", userId);
+
+    const user = await models.user.destroy({ where: { id: userId } });
+
+    res.status(201).json({ message: `User deleted` });
+  } catch (error) {
+    res.status(500).json({ error });
+  }
+};

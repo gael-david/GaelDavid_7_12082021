@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 import CSS from "csstype";
 
 export type StyledProps = {
-  primary?: boolean;
+  $primary?: boolean;
 };
 
 export const baseButtonStyle = css<StyledProps>`
@@ -12,13 +12,17 @@ export const baseButtonStyle = css<StyledProps>`
   height: 4rem;
   border-radius: 10px;
   border: none;
-  background: ${(props) => (props.primary ? "rgb(0, 186, 124)" : "#30465d")};
+  background: ${(props) => (props.$primary ? "#E94425" : "#30465d")};
   color: white;
   white-space: nowrap;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   &:disabled {
     cursor: auto;
-    background: rgb(0 186 124 / 28%);
+    background: #e9422563;
     color: #192734;
   }
 `;
@@ -37,7 +41,7 @@ type Props = {
 
 export default function Button({ onClick, children, primary = false, disabled = false, style, ...props }: Props) {
   return (
-    <StyledButton onClick={onClick} primary={primary} style={style} {...props} disabled={disabled}>
+    <StyledButton onClick={onClick} $primary={primary} style={style} {...props} disabled={disabled}>
       {children}
     </StyledButton>
   );
