@@ -17,10 +17,6 @@ router.get("/user/:id", postsControllers.getUserPosts);
 
 router.post("/create", multer, postsControllers.createOnePost);
 
-// router.post("/:id/like", checkAuth, postsControllers.likeOnePost);
-
-// router.put("/:id", checkAuth, multer, postsControllers.updateOnePost);
-
 router.delete("/:id", checkAuth, postsControllers.deleteOnePost);
 
 router.get("/:id/comments", checkAuth, postsControllers.getComments);
