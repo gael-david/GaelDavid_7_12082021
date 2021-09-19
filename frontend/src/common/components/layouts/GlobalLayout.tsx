@@ -9,7 +9,7 @@ const GlobalLayoutStyle = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3rem;
-  height: 100%;
+  width: 100%;
   justify-content: space-between;
 `;
 

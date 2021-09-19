@@ -4,6 +4,7 @@ import { AxiosError } from "axios";
 import { useState } from "react";
 import styled from "styled-components";
 import { deleteUserAPI } from "../../../api/deleteUser";
+import { checkIfLogged } from "../../../helpers/auth";
 
 const StyledFooter = styled.footer`
   min-height: 6rem;
@@ -24,6 +25,7 @@ const StyledFooter = styled.footer`
 `;
 export default function Footer() {
   const [error, setError] = useState<AxiosError>(null);
+  const isLogged = checkIfLogged();
 
   async function onDeleteAccount() {
     try {
@@ -38,10 +40,12 @@ export default function Footer() {
   return (
     <StyledFooter>
       <span>©Groupomania - 2021</span>
-      <small onClick={onDeleteAccount}>
-        <FontAwesomeIcon icon={faUserTimes} style={{ marginRight: 5 }} />
-        Delete your account
-      </small>
+      {isLogged && (
+        <small onClick={onDeleteAccount}>
+          <FontAwesomeIcon icon={faUserTimes} style={{ marginRight: 5 }} />
+          Delete your account
+        </small>
+      )}
       {error && <div>{error}</div>}
     </StyledFooter>
   );

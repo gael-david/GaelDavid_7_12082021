@@ -33,6 +33,8 @@ const GlobalStyle = createGlobalStyle`
   #root {
     padding: 2rem;
     height: 100%;
+    display: flex;
+    width: 100%;
   }
 
   * {
