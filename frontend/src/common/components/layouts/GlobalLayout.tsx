@@ -10,7 +10,6 @@ const GlobalLayoutStyle = styled.div`
   flex-direction: column;
   gap: 3rem;
   width: 100%;
-  justify-content: space-between;
 `;
 
 export default function GlobalLayout({ children }: Props) {

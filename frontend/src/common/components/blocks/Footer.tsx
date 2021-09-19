@@ -13,6 +13,7 @@ const StyledFooter = styled.footer`
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  margin-top: auto;
 
   & small {
     font-size: 80%;
