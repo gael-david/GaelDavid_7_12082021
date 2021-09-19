@@ -28,6 +28,6 @@ const postsRoutes = require("./routes/posts");
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postsRoutes);
 
-app.listen(4000, () => {
+app.listen(port, () => {
   console.log(`Connected on http://localhost:${port}`);
 });
